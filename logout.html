@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+
+    <title>Logout</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('images/cdev_imge_bg2.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #fff;
+        }
+
+        .logout-container {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        .button.cancel {
+            background-color: #f44336;
+        }
+
+        .button.cancel:hover {
+            background-color: #e53935;
+        }
+    </style>
+    <script>
+        // Store the current page URL before logging out
+        const currentPage = window.location.href;
+
+        // Function to handle custom logout prompt
+        function confirmLogout() {
+            const confirmation = confirm("Are you sure you want to log out?");
+            if (confirmation) {
+                // If user confirms logout, redirect to index.html
+                window.location.href = 'index.html';
+            } else {
+                // If user cancels, stay on the current page
+                window.location.href = currentPage;
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="logout-container">
+        <h1>Logging Out</h1>
+        <p>Are you sure you want to log out?</p>
+        <button class="button" onclick="confirmLogout()">Yes, Log Me Out</button>
+        <br><br>
+        <button class="button cancel" onclick="window.location.href = currentPage;">Cancel</button>
+    </div>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+
+    <title>Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('images/cdev_img_bg1.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .navbar {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar a, .submenu a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .navbar a:hover, .submenu a:hover {
+            text-decoration: underline;
+        }
+
+        .submenu {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+            flex-direction: column;
+        }
+
+        .submenu a {
+            margin: 5px 0;
+        }
+
+        .dropdown:hover .submenu {
+            display: flex;
+        }
+
+        .welcome-message {
+            margin-top: 20px;
+            font-size: 22px;
+            color: white;
+            text-align: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 90%;
+            max-width: 800px;
+            margin-top: 30px;
+            display: flex;
+            gap: 40px;
+        }
+
+        .profile-section, .resume-section {
+            flex: 1;
+            color: #4CAF50;
+        }
+
+        .profile-section h3, .resume-section h3 {
+            margin-bottom: 10px;
+            color: #4CAF50;
+        }
+
+        .profile-picture {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-picture img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            border: 2px solid #4CAF50;
+        }
+
+        .resume-section iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="profile.html" id="profileLink">Profile</a>
+        <div class="dropdown">
+            <a href="career_planning.html" id="careerPlanningLink">Career Planning</a>
+            <div class="submenu">
+                <a href="job_searching.html" id="jobSearchLink">Job Searching</a>
+                <a href="skill_development.html" id="skillDevelopmentLink">Skill Development</a>
+            </div>
+        </div>
+        <a href="settings.html">Settings</a>
+        <a href="#" onclick="confirmLogout()">Logout</a>
+    </div>
+
+    <div class="welcome-message">
+        Hey <span id="usernameDisplay">User</span>, welcome to your profile!
+    </div>
+
+    <div class="container">
+        <div class="profile-section">
+            <h3>Profile Information</h3>
+            <div class="profile-picture">
+                <img id="profilePhoto" src="images/default-avatar.png" alt="Profile Photo">
+                <button id="changePhotoButton">Change Photo</button>
+            </div>
+
+            <div>
+                <p><strong>First Name:</strong> <span id="firstNameDisplay"></span></p>
+                <p><strong>Last Name:</strong> <span id="lastNameDisplay"></span></p>
+                <p><strong>School:</strong> <span id="schoolDisplay"></span></p>
+                <p><strong>Level:</strong> <span id="levelDisplay"></span></p>
+            </div>
+        </div>
+
+        <div class="resume-section">
+            <h3>Resume</h3>
+            <div id="resumeDisplay">
+                <iframe id="resumeViewer" src="" title="Resume Viewer"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        © 2024 Career Development App. All rights reserved.
+    </div>
+
+    <script>
+        // Example data from localStorage (this would be saved from the settings page)
+        const userData = JSON.parse(localStorage.getItem('userProfile')) || {};
+
+        // Fetch profile information
+        document.getElementById('usernameDisplay').innerText = userData.username || 'User';
+        document.getElementById('firstNameDisplay').innerText = userData.firstName || 'N/A';
+        document.getElementById('lastNameDisplay').innerText = userData.lastName || 'N/A';
+        document.getElementById('schoolDisplay').innerText = userData.school || 'N/A';
+        document.getElementById('levelDisplay').innerText = userData.level || 'N/A';
+
+        // Fetch and display profile photo
+        const profilePhoto = document.getElementById('profilePhoto');
+        if (userData.profilePhoto) {
+            profilePhoto.src = userData.profilePhoto;
+        }
+
+        // Fetch and display resume
+        const resumeViewer = document.getElementById('resumeViewer');
+        if (userData.resume) {
+            resumeViewer.src = userData.resume;
+        }
+
+        // Optional: Handle photo change
+        document.getElementById('changePhotoButton').addEventListener('click', function() {
+            // Add functionality to change photo if necessary
+        });
+
+        // Logout Confirmation
+        function confirmLogout() {
+            if (confirm('Are you sure you want to log out?')) {
+                // Redirect to logout or perform logout actions here
+                window.location.href = 'logout.html'; // Example logout redirection
+            }
+        }
+    </script>
+</body>
+</html>

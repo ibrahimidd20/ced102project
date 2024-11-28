@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+
+    <title>Job Searching</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('images/cdev_img_bg1.jpg');
+            background-size: cover;
+            background-position: center;
+            color: #333;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .navbar {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar a, .submenu a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .navbar a:hover, .submenu a:hover {
+            text-decoration: underline;
+        }
+
+        .submenu {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+            flex-direction: column;
+        }
+
+        .submenu a {
+            margin: 5px 0;
+        }
+
+        .dropdown:hover .submenu {
+            display: flex;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #575757;
+        }
+
+        .welcome-message {
+            margin-top: 20px;
+            font-size: 22px;
+            color: white;
+            text-align: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 90%;
+            max-width: 900px;
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        h3 {
+            font-size: 24px;
+            color: #4CAF50;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: justify;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            max-width: 400px;
+            margin: 20px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+            border-radius: 10px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            text-align: center;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="profile.html">Profile</a>
+        <div class="dropdown">
+            <a href="career_planning.html">Career Planning</a>
+            <div class="submenu">
+                <a href="job_searching.html">Job Searching</a>
+                <a href="skill_development.html">Skill Development</a>
+            </div>
+        </div>
+        <a href="settings.html">Settings</a>
+        <a href="#" onclick="confirmLogout()">Logout</a>
+    </div>
+
+    <div class="welcome-message">
+        Welcome to your Job Searching page!
+    </div>
+
+    <div class="container">
+        <!-- Job Search Section -->
+        <div class="section" id="jobSearchSection">
+            <h3>Search for Jobs</h3>
+            <p>
+                Choose a job board below to start searching for jobs. Once you select a platform, a search interface will appear to help you find job opportunities.
+            </p>
+
+            <!-- Job Board Dropdown -->
+            <select id="jobBoardSelect" onchange="loadJobBoard()">
+                <option value="">Select a Job Board</option>
+                <option value="ziprecruiter">Zip Recruiter</option>
+                <option value="monster">Monster</option>
+                <option value="indeed">Indeed</option>
+                <option value="linkedin">LinkedIn</option>
+                <option value="handshake">Handshake</option>
+            </select>
+
+            <!-- Job Board iframe -->
+            <iframe id="jobBoardIframe" src="" style="display:none;"></iframe>
+        </div>
+    </div>
+
+    <div class="footer">
+        © 2024 Career Development App. All rights reserved.
+    </div>
+
+    <script>
+        // Function to change iframe source based on user selection
+        function loadJobBoard() {
+            const jobBoardSelect = document.getElementById('jobBoardSelect');
+            const iframe = document.getElementById('jobBoardIframe');
+            const selectedBoard = jobBoardSelect.value;
+
+            if (selectedBoard) {
+                let url = '';
+
+                // Assign URL for each job board
+                switch (selectedBoard) {
+                    case 'ziprecruiter':
+                        url = 'https://www.ziprecruiter.com';
+                        break;
+                    case 'monster':
+                        url = 'https://www.monster.com';
+                        break;
+                    case 'indeed':
+                        url = 'https://www.indeed.com';
+                        break;
+                    case 'linkedin':
+                        url = 'https://www.linkedin.com/jobs/';
+                        break;
+                    case 'handshake':
+                        url = 'https://lehman.joinhandshake.com/';
+                        break;
+                    default:
+                        url = '';
+                        break;
+                }
+
+                // Display iframe with selected URL
+                iframe.src = url;
+                iframe.style.display = 'block';
+            } else {
+                // Hide iframe if no selection
+                iframe.style.display = 'none';
+            }
+        }
+
+        // Logout Confirmation
+        function confirmLogout() {
+            if (confirm('Are you sure you want to log out?')) {
+                // Redirect to logout or perform logout actions here
+                window.location.href = 'logout.html'; // Example logout redirection
+            }
+        }
+    </script>
+</body>
+</html>

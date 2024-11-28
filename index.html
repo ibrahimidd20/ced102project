@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+
+    <title>Welcome</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('images/cdev_img_bg1.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 90%;
+            max-width: 400px;
+            color: #4CAF50;
+            text-align: center;
+            flex: 1;
+        }
+
+        .container h2 {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"], select {
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .password-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .show-password-btn {
+            cursor: pointer;
+            font-size: 14px;
+            color: #4CAF50;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            text-align: center;
+            width: 100%;
+            position: relative;
+            bottom: 0;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .link-container {
+            margin-top: 10px;
+        }
+
+        .link-container a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        .link-container a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome to Your Career Development App</h2>
+        <div id="formContainer">
+            <h3>Sign In</h3>
+            <input type="text" id="loginUsername" placeholder="Username or Email" required>
+            <div class="password-container">
+                <input type="password" id="loginPassword" placeholder="Password" required>
+                <span class="show-password-btn" id="loginTogglePassword" onclick="togglePassword('loginPassword', 'loginTogglePassword')">Show</span>
+            </div>
+            <button id="signInButton">Sign In</button>
+
+            <div class="link-container">
+                <a href="#" id="showSignUp">Create an Account</a><br>
+                <a href="#" id="showResetPassword">Forgot Password?</a>
+            </div>
+        </div>
+
+        <div id="signupContainer" style="display: none;">
+            <h3>Sign Up</h3>
+            <input type="text" id="signupUsername" placeholder="Username" required>
+            <input type="email" id="signupEmail" placeholder="Email" required>
+            <div class="password-container">
+                <input type="password" id="signupPassword" placeholder="Password" required>
+                <span class="show-password-btn" id="signupTogglePassword" onclick="togglePassword('signupPassword', 'signupTogglePassword')">Show</span>
+            </div>
+            <div class="password-container">
+                <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                <span class="show-password-btn" id="confirmTogglePassword" onclick="togglePassword('confirmPassword', 'confirmTogglePassword')">Show</span>
+            </div>
+            <select id="securityQuestion" required>
+                <option value="">Select a Security Question</option>
+                <option value="motherMaidenName">What is your mother's maiden name?</option>
+                <option value="petName">What is the name of your first pet?</option>
+                <option value="birthCity">What city were you born in?</option>
+                <option value="schoolName">What is the name of your elementary school?</option>
+            </select>
+            <input type="text" id="securityAnswer" placeholder="Your Answer" required>
+
+            <button id="signupButton">Sign Up</button>
+
+            <div class="link-container">
+                <a href="#" id="showSignIn">Already have an account? Sign In</a>
+            </div>
+        </div>
+
+        <div id="resetPasswordContainer" style="display: none;">
+            <h3>Reset Password</h3>
+            <input type="email" id="resetEmail" placeholder="Enter your email" required>
+            <select id="resetSecurityQuestion" required>
+                <option value="">Select your security question</option>
+                <option value="motherMaidenName">What is your mother's maiden name?</option>
+                <option value="petName">What is the name of your first pet?</option>
+                <option value="birthCity">What city were you born in?</option>
+                <option value="schoolName">What is the name of your elementary school?</option>
+            </select>
+            <input type="text" id="resetAnswer" placeholder="Answer to security question" required>
+            <button id="verifyAnswerButton">Verify Answer</button>
+
+            <div id="resetPasswordBox" style="display: none;">
+                <input type="password" id="newPassword" placeholder="New Password" required>
+                <input type="password" id="confirmNewPassword" placeholder="Confirm New Password" required>
+                <button id="resetPasswordButton">Reset Password</button>
+            </div>
+
+            <div class="link-container">
+                <a href="#" id="backToSignIn">Back to Sign In</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        © 2024 Career Development App. All rights reserved.
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('formContainer');
+        const signupForm = document.getElementById('signupContainer');
+        const resetPasswordForm = document.getElementById('resetPasswordContainer');
+
+        const showSignUp = document.getElementById('showSignUp');
+        const showSignIn = document.getElementById('showSignIn');
+        const showResetPassword = document.getElementById('showResetPassword');
+        const backToSignIn = document.getElementById('backToSignIn');
+
+        const signInButton = document.getElementById('signInButton');
+        const signupButton = document.getElementById('signupButton');
+        const resetPasswordButton = document.getElementById('resetPasswordButton');
+        const verifyAnswerButton = document.getElementById('verifyAnswerButton');
+
+        // Show/Hide Password function
+        function togglePassword(inputId, toggleButtonId) {
+            const passwordInput = document.getElementById(inputId);
+            const toggleButton = document.getElementById(toggleButtonId);
+            const isPasswordVisible = passwordInput.type === 'password';
+            passwordInput.type = isPasswordVisible ? 'text' : 'password';
+            toggleButton.textContent = isPasswordVisible ? 'Hide' : 'Show';
+        }
+
+        // Show Sign Up form
+        showSignUp.addEventListener('click', () => {
+            loginForm.style.display = 'none';
+            signupForm.style.display = 'block';
+            resetPasswordForm.style.display = 'none';
+        });
+
+        // Show Sign In form
+        showSignIn.addEventListener('click', () => {
+            loginForm.style.display = 'block';
+            signupForm.style.display = 'none';
+            resetPasswordForm.style.display = 'none';
+        });
+
+        // Show Reset Password form
+        showResetPassword.addEventListener('click', () => {
+            loginForm.style.display = 'none';
+            signupForm.style.display = 'none';
+            resetPasswordForm.style.display = 'block';
+        });
+
+        // Back to Sign In
+        backToSignIn.addEventListener('click', () => {
+            loginForm.style.display = 'block';
+            signupForm.style.display = 'none';
+            resetPasswordForm.style.display = 'none';
+        });
+
+        // Sign Up Function
+        signupButton.addEventListener('click', () => {
+            const username = document.getElementById('signupUsername').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const securityQuestion = document.getElementById('securityQuestion').value;
+            const securityAnswer = document.getElementById('securityAnswer').value;
+
+            if (password === confirmPassword) {
+                // Store security answer in localStorage
+                localStorage.setItem('securityAnswer', securityAnswer.toLowerCase());
+                localStorage.setItem('securityQuestion', securityQuestion);
+                localStorage.setItem('userEmail', email);
+
+                alert("Account created successfully!");
+                loginForm.style.display = 'block';
+                signupForm.style.display = 'none';
+                resetPasswordForm.style.display = 'none';
+            } else {
+                alert("Passwords do not match.");
+            }
+        });
+
+        // Sign In Function
+        signInButton.addEventListener('click', () => {
+            const loginUsername = document.getElementById('loginUsername').value;
+            const loginPassword = document.getElementById('loginPassword').value;
+
+            // Dummy validation (could be replaced with actual user validation)
+            if (loginUsername === localStorage.getItem('userEmail')) {
+                alert("Login successful!");
+                // Proceed to main dashboard (add your app logic here)
+            } else {
+                alert("Invalid login credentials.");
+            }
+        });
+
+        // Verify Security Question Answer
+        verifyAnswerButton.addEventListener('click', () => {
+            const resetAnswer = document.getElementById('resetAnswer').value;
+            const correctAnswer = localStorage.getItem('securityAnswer');
+
+            if (resetAnswer.toLowerCase() === correctAnswer) {
+                document.getElementById('resetPasswordBox').style.display = 'block';
+            } else {
+                alert("Incorrect answer.");
+            }
+        });
+
+        // Handle Password Reset
+        resetPasswordButton.addEventListener('click', () => {
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+
+            if (newPassword === confirmNewPassword) {
+                alert("Password reset successful!");
+                loginForm.style.display = 'block';
+                resetPasswordForm.style.display = 'none';
+            } else {
+                alert("Passwords do not match.");
+            }
+        });
+
+    </script>
+</body>
+</html>
